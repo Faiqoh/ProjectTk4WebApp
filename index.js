@@ -17,17 +17,17 @@ app.engine('html', require('ejs').renderFile);
 
 app.use(express.static(__dirname+'/frontend'))
 // mendefinisikan router
-app.get('/', Auth.UI, (req, res) => {
+app.get('/', (req, res) => {
     res.redirect("/product")
 });
-app.get('/login', (req, res) => {
-    const token = req.cookies.access_token;
-    if (token) {
-        return res.redirect("/");
-    }
-    return res.render('login.html')
-});
-app.get('/product',Auth.UI, (req, res) => {
+// app.get('/login', (req, res) => {
+//     const token = req.cookies.access_token;
+//     if (token) {
+//         return res.redirect("/");
+//     }
+//     return res.render('login.html')
+// });
+app.get('/product', (req, res) => {
     return res.render('list_produk.html')
 });
 
