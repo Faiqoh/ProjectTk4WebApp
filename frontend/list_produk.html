@@ -17,6 +17,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css">
 </head>
 <body>
     <div class="container-xl">
@@ -34,7 +35,7 @@
                 <h2><b>List</b></h2>
               </div>
               <div class="col-sm-6">
-                <a href="#addModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Tambah</span></a>   
+                <a href="#addModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Tambah </span></a>   
               </div>
             </div>
           </div>
@@ -62,38 +63,62 @@
       <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">            
-              <h5 class="modal-title">Tambah Produk</h5>
+              <h5 class="modal-title">Input Data Diri</h5>
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             </div>
             <div class="modal-body"> 
               <form>         
                 <div class="form-group">
-                  <label>Nama Produk</label>
-                  <input name="NamaProduk" type="text" class="form-control" placeholder="Enter Nama Produk" required>
+                  <label>Nama</label>
+                  <input name="Nama" type="text" class="form-control" placeholder="Enter Nama" required>
                 </div>
                 <div class="form-group">
-                  <label>Deskripsi</label>
-                  <input name="Deskripsi" type="text" class="form-control" placeholder="Enter Deskripsi Produk" required>
+                  <label>NIM</label>
+                  <input name="NIM" type="number" class="form-control" placeholder="Enter NIM" required>
                 </div>
                 <div class="form-group">
-                  <label>Harga Beli</label>
-                  <input name="HargaBeli" type="number" class="form-control" placeholder="Enter Harga Beli" required>
+                  <label>Alamat</label>
+                  <input name="Alamat" type="text" class="form-control" placeholder="Enter Alamat" required>
                 </div>
                 <div class="form-group">
-                  <label>Harga Jual</label>
-                  <input name="HargaJual" type="number" class="form-control" placeholder="Enter Harga Jual" required>
-                </div>  
+                  <label>Jenis Kelamin</label>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input type="radio" class="form-check-input" name="optradio">Pria
+                    </label>
+                  </div>
+                  <div class="form-check-inline">
+                    <label class="form-check-label">
+                      <input type="radio" class="form-check-input" name="optradio">Wanita
+                    </label>
+                  </div>
+                </div>
+
                 <div class="form-group">
-                  <label>Gambar</label>
-                  <input name="Gambar" required type="file" name="Foto" class="form-control-file" id="foto" accept="image/png, image/jpeg">
-                </div> 
+                  <label>Hobi</label>
+                  <select type="text" class="form-control select2" multiple="multiple" name="Hobi" id="dropdownHobi" required style="width: 100%">
+                      <option value="">Pilih Hobi</option>
+                      <option value="Coding">Coding</option>
+                      <option value="Membaca Buku">Membaca Buku</option>
+                      <option value="Menonton Film">Menonton Film</option>
+                      <option value="Bermain Game">Bermain Game</option>
+                      <option value="Berenang">Berenang</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Komentar</label>
+                  <textarea name="Komentar" type="text" class="form-control" placeholder="Enter Komentar" required></textarea>
+                </div>
+                <div class="form-group">
+                  <label>Lokasi</label>
+                  <input name="Lokasi" type="text" class="form-control" placeholder="Enter Lokasi" required>
+                </div>
               </form>         
             </div>
             <div class="modal-footer">
-              <button class="btn btn-default" data-dismiss="modal">Cancel</button>
-              <button class="btn btn-success" onclick="AddData()">Add 1</button>
+              <button class="btn btn-primary">Reset</button>
+              <button class="btn btn-success" onclick="AddData()">Add</button>
             </div>
-          
         </div>
       </div>
     </div>
@@ -109,31 +134,55 @@
           </div>
           <div class="modal-body"> 
             <form>         
-              <div class="form-group">
-                <label>Nama Produk</label>
-                <input name="NamaProduk" type="text" class="form-control" placeholder="Enter Nama Produk" required>
-              </div>
-              <div class="form-group">
-                <label>Deskripsi</label>
-                <input name="Deskripsi" type="text" class="form-control" placeholder="Enter Deskripsi Produk" required>
-              </div>
-              <div class="form-group">
-                <label>Harga Beli</label>
-                <input name="HargaBeli" type="number" class="form-control" placeholder="Enter Harga Beli" required>
-              </div>
-              <div class="form-group">
-                <label>Harga Jual</label>
-                <input name="HargaJual" type="number" class="form-control" placeholder="Enter Harga Jual" required>
-              </div>  
-              <div class="form-group">
-                <label>Gambar</label>
-                <input name="Gambar" required type="file" name="Foto" class="form-control-file" id="foto" accept="image/png, image/jpeg">
-              </div> 
-            </form>         
+                <div class="form-group">
+                  <label>Nama</label>
+                  <input name="Nama" type="text" class="form-control" placeholder="Enter Nama" required>
+                </div>
+                <div class="form-group">
+                  <label>NIM</label>
+                  <input name="NIM" type="number" class="form-control" placeholder="Enter NIM" required>
+                </div>
+                <div class="form-group">
+                  <label>Alamat</label>
+                  <input name="Alamat" type="text" class="form-control" placeholder="Enter Alamat" required>
+                </div>
+                <div class="form-group">
+                  <label>Jenis Kelamin</label>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input type="radio" class="form-check-input" name="optradio">Pria
+                    </label>
+                  </div>
+                  <div class="form-check-inline">
+                    <label class="form-check-label">
+                      <input type="radio" class="form-check-input" name="optradio">Wanita
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Hobi</label>
+                  <select type="text" class="form-control select2" multiple="multiple" name="Hobi" id="dropdownHobiEdit" required style="width: 100%">
+                      <option value="">Pilih Hobi</option>
+                      <option value="Coding">Coding</option>
+                      <option value="Membaca Buku">Membaca Buku</option>
+                      <option value="Menonton Film">Menonton Film</option>
+                      <option value="Bermain Game">Bermain Game</option>
+                      <option value="Berenang">Berenang</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Komentar</label>
+                  <textarea name="Komentar" type="text" class="form-control" placeholder="Enter Komentar" required></textarea>
+                </div>
+                <div class="form-group">
+                  <label>Lokasi</label>
+                  <input name="Lokasi" type="text" class="form-control" placeholder="Enter Lokasi" required>
+                </div>
+              </form>   
           </div>
           <div class="modal-footer">
-            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-            <input onclick="SubmitEdit()" type="submit" class="btn btn-info" value="Save">
+            <button class="btn btn-default">Reset</button>
+            <button onclick="SubmitEdit()" type="submit" class="btn btn-info">Save</button>
           </div>
         </div>
       </div>
@@ -146,7 +195,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">            
-              <h5 class="modal-title">Hapus Produk</h5>
+              <h5 class="modal-title">Hapus List</h5>
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             </div>
             <div class="modal-body">          
@@ -170,9 +219,14 @@
     <!-- bootstrap js -->
 
     <script src="assets/app/helper.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.full.min.js"></script>
     
 
     <script>
+
+        $('#dropdownHobi').select2();
+        $('#dropdownHobiEdit').select2();
+
         let selectedData = {}
         const GetData = (sortFIeld="NamaProduk",sort=1)=>{
           let param = {}
