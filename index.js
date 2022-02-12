@@ -2,9 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const appConf = require('./config/app.conf');
-const Auth = require('./auth');
-const userRouter = require('./routers/UserRouter')
-const productRouter = require('./routers/ProductRouter')
+const mahasiswaRouter = require('./routers/MahasiswaRouter')
 
 
 const app = express();
@@ -18,21 +16,12 @@ app.engine('html', require('ejs').renderFile);
 app.use(express.static(__dirname+'/frontend'))
 // mendefinisikan router
 app.get('/', (req, res) => {
-    res.redirect("/product")
+    res.redirect("/mahasiswa")
 });
-// app.get('/login', (req, res) => {
-//     const token = req.cookies.access_token;
-//     if (token) {
-//         return res.redirect("/");
-//     }
-//     return res.render('login.html')
-// });
-app.get('/product', (req, res) => {
-    return res.render('list_produk.html')
+app.get('/mahasiswa', (req, res) => {
+    return res.render('list_mahasiswa.html')
 });
-
-app.use("/api/user", userRouter)
-app.use("/api/product", Auth.API, productRouter)
+app.use("/api/mahasiswa", mahasiswaRouter)
 
 // Konfigurasi Database
 const dbConfig = require('./config/db.conf');

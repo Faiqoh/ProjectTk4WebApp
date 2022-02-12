@@ -1,31 +1,30 @@
 const { sendJson } = require("next/dist/server/api-utils");
-const Product = require("../models/ProductModel");
+const Mahasiswa = require("../models/MahasiswaModel");
 module.exports = {
     GetAll : async (req, res)=>{
         const {sortFIeld,sort} = req.query;
-        // res.send({''+sortFIeld:parseInt(sort)})
         let SortParam = {}
         if (sortFIeld&&sort) {
             sort[sortFIeld] = parseInt(sort)
         }
-        Product.find({}).sort(sortFIeld&&sort?SortParam:{_id:-1})
+        Mahasiswa.find({}).sort(sortFIeld&&sort?SortParam:{_id:-1})
         .then(result=>res.send({success:true,data: result,count:result.length}))
     },
     GetByID : (req,res) => {
-        Product.findById({_id : req.params.id})
+        Mahasiswa.findById({_id : req.params.id})
         .then(data => res.send(data))
     },
-    AddProduct : async (req, res)=>{
-        Product.create(req.body).then(result=>res.send({success:true,data: result}))
+    AddMahasiswa : async (req, res)=>{
+        Mahasiswa.create(req.body).then(result=>res.send({success:true,data: result}))
     },
-    EditProduct : async (req,res) => {
-        Product.findByIdAndUpdate({_id : req.params.id}, { $set:
+    EditMahasiswa : async (req,res) => {
+        Mahasiswa.findByIdAndUpdate({_id : req.params.id}, { $set:
             req.body
         }).then(result=>res.send({success:true,data: result}))
     },
-    DeleteProduct : async (req,res) => {
+    DeleteMahasiswa : async (req,res) => {
         const id = req.params.id
-        Product.findByIdAndRemove(id).then(result=>{
+        Mahasiswa.findByIdAndRemove(id).then(result=>{
             res.send({success:true, data : result})
         })
         

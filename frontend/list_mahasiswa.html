@@ -39,7 +39,7 @@
               </div>
             </div>
           </div>
-          <table id="tableProduct" class="table table-striped table-hover">
+          <table id="tableMahasiswa" class="table table-striped table-hover">
             <thead>
               <tr>
                 <th>Nim</th>
@@ -49,6 +49,7 @@
                 <th>Hobi</th>
                 <th>Komentar</th>
                 <th>Lokasi</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody></tbody>
@@ -74,7 +75,7 @@
                 </div>
                 <div class="form-group">
                   <label>NIM</label>
-                  <input name="NIM" type="number" class="form-control" placeholder="Enter NIM" required>
+                  <input name="NIM" type="text" class="form-control" placeholder="Enter NIM" required>
                 </div>
                 <div class="form-group">
                   <label>Alamat</label>
@@ -84,20 +85,18 @@
                   <label>Jenis Kelamin</label>
                   <div class="form-check">
                     <label class="form-check-label">
-                      <input type="radio" class="form-check-input" name="optradio">Pria
+                      <input type="radio" class="form-check-input" value="Pria" name="JenisKelamin">Pria
                     </label>
                   </div>
                   <div class="form-check-inline">
                     <label class="form-check-label">
-                      <input type="radio" class="form-check-input" name="optradio">Wanita
+                      <input type="radio" class="form-check-input" value="Wanita" name="JenisKelamin">Wanita
                     </label>
                   </div>
                 </div>
-
                 <div class="form-group">
                   <label>Hobi</label>
-                  <select type="text" class="form-control select2" multiple="multiple" name="Hobi" id="dropdownHobi" required style="width: 100%">
-                      <option value="">Pilih Hobi</option>
+                  <select type="select" class="form-control select2" multiple="multiple" name="Hobi" id="dropdownHobi" required style="width: 100%">
                       <option value="Coding">Coding</option>
                       <option value="Membaca Buku">Membaca Buku</option>
                       <option value="Menonton Film">Menonton Film</option>
@@ -109,14 +108,10 @@
                   <label>Komentar</label>
                   <textarea name="Komentar" type="text" class="form-control" placeholder="Enter Komentar" required></textarea>
                 </div>
-                <div class="form-group">
-                  <label>Lokasi</label>
-                  <input name="Lokasi" type="text" class="form-control" placeholder="Enter Lokasi" required>
-                </div>
               </form>         
             </div>
             <div class="modal-footer">
-              <button class="btn btn-primary">Reset</button>
+              <button class="btn btn-primary" onclick="ResetForm()">Reset</button>
               <button class="btn btn-success" onclick="AddData()">Add</button>
             </div>
         </div>
@@ -140,7 +135,7 @@
                 </div>
                 <div class="form-group">
                   <label>NIM</label>
-                  <input name="NIM" type="number" class="form-control" placeholder="Enter NIM" required>
+                  <input name="NIM" type="text" class="form-control" placeholder="Enter NIM" required>
                 </div>
                 <div class="form-group">
                   <label>Alamat</label>
@@ -150,19 +145,18 @@
                   <label>Jenis Kelamin</label>
                   <div class="form-check">
                     <label class="form-check-label">
-                      <input type="radio" class="form-check-input" name="optradio">Pria
+                      <input type="radio" class="form-check-input" value="Pria" name="JenisKelamin">Pria
                     </label>
                   </div>
                   <div class="form-check-inline">
                     <label class="form-check-label">
-                      <input type="radio" class="form-check-input" name="optradio">Wanita
+                      <input type="radio" class="form-check-input" value="Wanita" name="JenisKelamin">Wanita
                     </label>
                   </div>
                 </div>
                 <div class="form-group">
                   <label>Hobi</label>
-                  <select type="text" class="form-control select2" multiple="multiple" name="Hobi" id="dropdownHobiEdit" required style="width: 100%">
-                      <option value="">Pilih Hobi</option>
+                  <select type="select" class="form-control select2" multiple="multiple" name="Hobi" id="dropdownHobiEdit" required style="width: 100%">
                       <option value="Coding">Coding</option>
                       <option value="Membaca Buku">Membaca Buku</option>
                       <option value="Menonton Film">Menonton Film</option>
@@ -174,14 +168,10 @@
                   <label>Komentar</label>
                   <textarea name="Komentar" type="text" class="form-control" placeholder="Enter Komentar" required></textarea>
                 </div>
-                <div class="form-group">
-                  <label>Lokasi</label>
-                  <input name="Lokasi" type="text" class="form-control" placeholder="Enter Lokasi" required>
-                </div>
               </form>   
           </div>
           <div class="modal-footer">
-            <button class="btn btn-default">Reset</button>
+            <button onclick="ResetForm()" class="btn btn-default">Reset</button>
             <button onclick="SubmitEdit()" type="submit" class="btn btn-info">Save</button>
           </div>
         </div>
@@ -228,46 +218,63 @@
         $('#dropdownHobiEdit').select2();
 
         let selectedData = {}
-        const GetData = (sortFIeld="NamaProduk",sort=1)=>{
+        const GetData = (sortFIeld="Nama",sort=1)=>{
           let param = {}
           if (!sortFIeld == "_id" && !sort==-1) {
             param = {sortFIeld,sort}
           }
-          request.get("/api/product/all",param,(res)=>{
-            RenderTableProduct(res?.data?res.data:[])
+          request.get("/api/mahasiswa/all",param,(res)=>{
+            RenderTableMahasiswa(res?.data?res.data:[])
           })
         }
 
         const AddData = async ()=>{
-          const param = await GenerateParam("#addModal input[name]")
-          request.post("/api/product/add",param,(data)=>{
-            if (data.success) {
-              $("#addModal").modal("hide")
-              $('body').removeClass('modal-open');
-              $('.modal-backdrop').remove();
-              ResetForm()
-              GetData("_id",-1)
-            }
-          })
+          const param = await GenerateParam("#addModal input[name],#addModal select[name], #addModal textarea[name]")
+          let location = {}
+          try {
+            loc = await getlocation()
+            location = {
+              latitude:loc?.coords?.latitude,
+              longitude:loc?.coords?.longitude}
+          } catch (error) {
+            // console.error("SUKURIN =>", error)
+          }finally{
+            param.Lokasi = location
+            request.post("/api/mahasiswa/add",param,(data)=>{
+              if (data.success) {
+                $("#addModal").modal("hide")
+                $('body').removeClass('modal-open');
+                $('.modal-backdrop').remove();
+                ResetForm()
+                GetData("_id",-1)
+              }
+            })
+
+          }
         }
 
-        const RenderTableProduct = (data)=>{
-          let tbody = $("#tableProduct tbody")
+        const RenderTableMahasiswa = (data)=>{
+          let tbody = $("#tableMahasiswa tbody")
             tbody.html("")
             if (data.length > 0) {
                 data.forEach((val,key)=>{
 
                     let tr = $("<tr>")
-                    const NamaProduk = $("<td>").text(val.NamaProduk)
-                    const Deskripsi = $("<td>").text(val.Deskripsi)
-                    const HargaBeli = $("<td>").text(val.HargaBeli)
-                    const HargaJual = $("<td>").text(val.HargaJual)
-                    const Gambar = $("<td>").append(`<img src="${val.Gambar}" class="img-fluid" width="30px">`)
+                    const NIM = $("<td>").text(val.NIM)
+                    const Nama = $("<td>").text(val.Nama)
+                    const Alamat = $("<td>").text(val.Alamat)
+                    const JenisKelamin = $("<td>").text(val.JenisKelamin)
+                    const Hobi = $("<td>").text(val.Hobi)
+                    const Komentar = $("<td>").text(val.Komentar)
+                    let Lokasi = $("<td>").text("no location")
+                    if (val?.Lokasi) {
+                      Lokasi = $("<td>").append(`<a href='https://www.google.com/maps/?q=${val.Lokasi.latitude},${val.Lokasi.longitude}'> See Location </a>`)
+                    }
                     const Action = $("<td>").append(`
                       <a onclick="HandleEdit('${val._id}')" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                       <a onclick="HandleRemove('${val._id}')" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a> 
                       `)
-                    const elm = tr.append(NamaProduk,Deskripsi,HargaBeli,HargaJual,Gambar,Action)
+                    const elm = tr.append(NIM,Nama,Alamat,JenisKelamin,Hobi,Komentar,Lokasi,Action)
                     tbody.append(elm)
                 })
             }else{
@@ -285,8 +292,8 @@
               case "file":
                 param[element.name] = element?.files?.length>0? await toBase64(element.files[0]):""
                 break;
-              case "number":
-              param[element.name] = parseInt($(element).val())
+              case "radio":
+              param[element.name] = element.checked?$(element).val(): param[element.name]
                 break;
               default:
                 param[element.name] = $(element).val()
@@ -298,10 +305,11 @@
         
         const ResetForm = ()=>{
           $('form').trigger("reset");
+          $('select').trigger("change");
         }
         
         const HandleEdit = (id)=>{
-          request.get(`/api/product/${id}`,{},(res)=>{
+          request.get(`/api/mahasiswa/${id}`,{},(res)=>{
             $("#editModal").modal("show")
             selectedData = res
             for (const key in res) {
@@ -320,7 +328,7 @@
         }
         
         const RequestforDelete = ()=>{
-          request.delete(`/api/product/${selectedData._id}`,{},(res)=>{
+          request.delete(`/api/mahasiswa/${selectedData._id}`,{},(res)=>{
             if (res.success) {
               $("#deleteModal").modal("hide")
               GetData()
@@ -339,7 +347,7 @@
               }
             }
           }
-          request.put(`/api/product/edit/${param._id}`,param,(data)=>{
+          request.put(`/api/mahasiswa/edit/${param._id}`,param,(data)=>{
             if (data.success) {
               $("#editModal").modal("hide");
               ResetForm()
@@ -360,6 +368,10 @@
             reader.onload = () => resolve(reader.result);
             reader.onerror = error => reject(error);
         });
+
+        const getlocation = () => new Promise((resolve,reject)=>{
+          navigator.geolocation.getCurrentPosition(res=>{resolve(res)},err=>{reject(err)})
+        })
 
         $(()=>{
           GetData()
