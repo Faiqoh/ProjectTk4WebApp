@@ -270,8 +270,8 @@
                     if (val?.Lokasi) {
                       Lokasi = $("<td>").append(`<a href='https://www.google.com/maps/?q=${val.Lokasi.latitude},${val.Lokasi.longitude}'> See Location </a>`)
                     }
+                    // <a onclick="HandleEdit('${val._id}')" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                     const Action = $("<td>").append(`
-                      <a onclick="HandleEdit('${val._id}')" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                       <a onclick="HandleRemove('${val._id}')" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a> 
                       `)
                     const elm = tr.append(NIM,Nama,Alamat,JenisKelamin,Hobi,Komentar,Lokasi,Action)
